@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeleCure Ghana - Bridging Healthcare Gaps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ffd700;
+            color: #2c5530;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .cta-button:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c5530;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: #f8f9fa;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Prototype Section */
+        .prototype {
+            background: #f8f9fa;
+        }
+
+        .prototype-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .prototype-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            border-radius: 30px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .app-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .app-title {
+            color: #2c5530;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .consultation-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .consult-btn {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .consult-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Milestones */
+        .milestones {
+            background: white;
+        }
+
+        .milestone-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .milestone-marker {
+            width: 20px;
+            height: 20px;
+            background: #4a7c59;
+            border-radius: 50%;
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+
+        .milestone-marker.completed {
+            background: #28a745;
+        }
+
+        .milestone-content {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            flex-grow: 1;
+        }
+
+        .milestone-title {
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c5530;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+            
+            .milestone-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .milestone-marker {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Interactive Elements */
+        .demo-button {
+            background: #ffd700;
+            color: #2c5530;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+
+        .demo-button:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4a7c59;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">TeleCure Ghana</a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#prototype">Prototype</a></li>
+                    <li><a href="#milestones">Progress</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>TeleCure Ghana</h1>
+                <p class="tagline">Bridging the Healthcare Gap in Rural Ghana with Smart Telehealth Solutions</p>
+                <p class="description">
+                    In many rural parts of Ghana, accessing qualified healthcare professionals is a major challenge. 
+                    TeleCure Ghana is a scalable telehealth solution designed to connect underserved communities 
+                    with timely, quality healthcare services. Our mission is to improve health outcomes, reduce 
+                    preventable deaths, and align with Sustainable Development Goal 3: Good Health and Well-being.
+                </p>
+                <a href="#prototype" class="cta-button">View Prototype</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section problem">
+        <div class="container">
+            <h2 class="section-title">The Challenge We're Solving</h2>
+            <p class="section-subtitle">
+                Rural Ghana faces a severe shortage of qualified healthcare professionals, leading to delayed diagnoses and poor health outcomes.
+            </p>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">🏥</div>
+                    <h3>Long Travel Distances</h3>
+                    <p>Rural communities often travel hours to reach the nearest health facility, making regular healthcare inaccessible.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">👨‍⚕️</div>
+                    <h3>Shortage of Specialists</h3>
+                    <p>Rural clinics lack medical specialists, forcing patients to seek care in distant urban centers.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <h3>High Emergency Costs</h3>
+                    <p>Emergency situations require expensive travel and accommodation, creating financial barriers to care.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📞</div>
+                    <h3>Poor Communication</h3>
+                    <p>Limited communication channels between patients and healthcare providers delay critical interventions.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">of rural areas lack specialists</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3hrs</div>
+                    <div class="stat-label">average travel to healthcare</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">delayed diagnoses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="section solution">
+        <div class="container">
+            <h2 class="section-title">Our Telehealth Solution</h2>
+            <p class="section-subtitle">
+                A mobile-based platform connecting rural residents with certified doctors through voice, video, and SMS consultations.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Multi-Channel Access</h3>
+                    <p>Connect via SMS, voice calls, or smartphone app - works with any device.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3>Certified Doctors</h3>
+                    <p>Access to qualified healthcare professionals and specialists on-demand.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Easy appointment booking with automated reminders and follow-ups.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Clinic Integration</h3>
+                    <p>Seamless referrals and coordination with local health facilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📶</div>
+                    <h3>Offline Features</h3>
+                    <p>Core functionality works even in low-network areas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚨</div>
+                    <h3>Health Alerts</h3>
+                    <p>Community health notifications and outbreak warnings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prototype Section -->
+    <section id="prototype" class="section prototype">
+        <div class="container">
+            <h2 class="section-title">Interactive Prototype</h2>
+            <p class="section-subtitle">
+                Experience our user-friendly interface designed for rural communities
+            </p>
+
+            <div class="prototype-container">
+                <div class="prototype-preview">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="app-header">
+                                <div class="app-title">TeleCure</div>
+                                <p style="color: #666; font-size: 0.9rem;">Your Health, Our Priority</p>
+                            </div>
+                            
+                            <div class="consultation-options">
+                                <button class="consult-btn" onclick="showConsultation('video')">
+                                    📹 Video Consultation
+                                </button>
+                                <button class="consult-btn" onclick="showConsultation('voice')">
+                                    📞 Voice Call
+                                </button>
+                                <button class="consult-btn" onclick="showConsultation('sms')">
+                                    💬 SMS Consultation
+                                </button>
+                                <button class="consult-btn" onclick="showConsultation('emergency')">
+                                    🚨 Emergency
+                                </button>
+                            </div>
+
+                            <div style="text-align: center; padding-top: 20px; border-top: 2px solid #eee;">
+                                <p style="color: #666; font-size: 0.8rem;">Available 24/7</p>
+                                <p style="color: #4a7c59; font-weight: bold;">Connect Now</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button class="demo-button" onclick="startDemo()">Try Interactive Demo</button>
+                    <button class="demo-button" onclick="showUserJourney()">User Journey</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Milestones Section -->
+    <section id="milestones" class="section milestones">
+        <div class="container">
+            <h2 class="section-title">Development Milestones</h2>
+            <p class="section-subtitle">Our journey from concept to community impact</p>
+
+            <div class="milestone-timeline">
+                <div class="milestone-item">
+                    <div class="milestone-marker completed"></div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">Phase 1: Problem Validation ✅</div>
+                        <p>Completed community interviews and research validation in rural districts</p>
+                    </div>
+                </div>
+                
+                <div class="milestone-item">
+                    <div class="milestone-marker completed"></div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">Phase 2: Prototype Design 🔄</div>
+                        <p>Currently gathering user feedback and refining the platform interface</p>
+                    </div>
+                </div>
+                
+                <div class="milestone-item">
+                    <div class="milestone-marker"></div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">Phase 3: MVP Testing</div>
+                        <p>Planned pilot testing in two rural districts by Q2 2026</p>
+                    </div>
+                </div>
+                
+                <div class="milestone-item">
+                    <div class="milestone-marker"></div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">Phase 4: Strategic Partnerships</div>
+                        <p>Building relationships with Ghana Health Service and NGO partners</p>
+                    </div>
+                </div>
+                
+                <div class="milestone-item">
+                    <div class="milestone-marker"></div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">Phase 5: Scale & Launch</div>
+                        <p>Full deployment across 50+ communities by 2027</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TeleCure Ghana</h3>
+                    <p>Bridging healthcare gaps in rural communities through innovative telehealth solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Our Mission</h3>
+                    <p>Improving health outcomes and supporting SDG 3: Good Health and Well-being for all Ghanaians.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Future Vision</h3>
+                    <p>Expanding to 50+ communities with AI-powered health assistance and offline capabilities.</p>
+                </div>
+            </div>
+            <p>&copy; 2025 TeleCure Ghana. Empowering rural healthcare through technology.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive prototype functions
+        function showConsultation(type) {
+            const messages = {
+                video: "Connecting to video consultation...\n👨‍⚕️ Dr. Mensah will be with you shortly!",
+                voice: "Initiating voice call...\n📞 Please hold while we connect you to a healthcare professional.",
+                sms: "SMS consultation activated.\n💬 Send your symptoms and receive expert guidance.",
+                emergency: "🚨 EMERGENCY PROTOCOL ACTIVATED\n🏥 Connecting to nearest emergency service..."
+            };
+            
+            alert(messages[type]);
+        }
+
+        function startDemo() {
+            let step = 1;
+            const steps = [
+                "Welcome to TeleCure Ghana! 👋",
+                "Step 1: Choose your consultation type",
+                "Step 2: Connect with certified healthcare professionals",
+                "Step 3: Receive expert medical guidance",
+                "Step 4: Get referrals or follow-up care if needed",
+                "Demo complete! Ready to improve rural healthcare? 🏥✨"
+            ];
+            
+            function showNextStep() {
+                if (step <= steps.length) {
+                    alert(steps[step - 1]);
+                    step++;
+                    if (step <= steps.length) {
+                        setTimeout(showNextStep, 2000);
+                    }
+                }
+            }
+            showNextStep();
+        }
+
+        function showUserJourney() {
+            const journey = `
+TeleCure Ghana User Journey:
+
+🏠 Patient at home in rural community
+    ↓
+📱 Opens TeleCure (SMS/App/Call)
+    ↓
+👨‍⚕️ Connects with healthcare professional
+    ↓
+💬 Describes symptoms & receives guidance
+    ↓
+📋 Gets diagnosis & treatment plan
+    ↓
+🏥 Referral to local clinic if needed
+    ↓
+✅ Follow-up care & monitoring
+
+Simple. Accessible. Life-saving.
+            `;
+            alert(journey);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.problem-card, .feature-card, .milestone-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

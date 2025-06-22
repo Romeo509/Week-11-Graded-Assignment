@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeleCure Ghana - Mobile App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 40px;
+            padding: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .app-container {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 30px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .app-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 20px 20px;
+            overflow-y: auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: #2c5530;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .consultation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .consult-card {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 25px 15px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+        }
+
+        .consult-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 124, 89, 0.4);
+        }
+
+        .consult-card:active {
+            transform: translateY(-1px);
+        }
+
+        .consult-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .consult-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .consult-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .emergency-section {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .emergency-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .emergency-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .emergency-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .emergency-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .features-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #2c5530;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 3px;
+        }
+
+        .feature-desc {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #eee;
+            padding: 15px 0 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #4a7c59;
+        }
+
+        .nav-icon {
+            font-size: 1.3rem;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 20px;
+            padding: 30px 25px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 10px;
+        }
+
+        .modal-text {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #eee;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Consultation Screen */
+        .consultation-screen {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .consultation-header {
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .consultation-info {
+            flex: 1;
+        }
+
+        .doctor-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .consultation-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .consultation-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .connecting-animation {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4a7c59, #2c5530);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .connecting-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 10px;
+        }
+
+        .connecting-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .consultation-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.end {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .action-btn.mute {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #eee;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .phone-container {
+                width: 100%;
+                max-width: 375px;
+                height: 100vh;
+                max-height: 812px;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .phone-screen {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+
+            <div class="app-container">
+                <!-- Main App Screen -->
+                <div id="mainScreen" class="main-screen">
+                    <div class="app-header">
+                        <div class="app-title">TeleCure</div>
+                        <div class="app-subtitle">Your Health, Our Priority</div>
+                    </div>
+
+                    <div class="main-content">
+                        <div class="welcome-section">
+                            <div class="welcome-title">Welcome back!</div>
+                            <div class="welcome-text">Connect with certified healthcare professionals anytime, anywhere.</div>
+                        </div>
+
+                        <div class="consultation-grid">
+                            <button class="consult-card" onclick="startConsultation('video')">
+                                <span class="consult-icon">📹</span>
+                                <div class="consult-title">Video Call</div>
+                                <div class="consult-subtitle">Face-to-face consultation</div>
+                            </button>
+
+                            <button class="consult-card" onclick="startConsultation('voice')">
+                                <span class="consult-icon">📞</span>
+                                <div class="consult-title">Voice Call</div>
+                                <div class="consult-subtitle">Audio consultation</div>
+                            </button>
+
+                            <button class="consult-card" onclick="startConsultation('chat')">
+                                <span class="consult-icon">💬</span>
+                                <div class="consult-title">Text Chat</div>
+                                <div class="consult-subtitle">Message a doctor</div>
+                            </button>
+
+                            <button class="consult-card" onclick="startConsultation('sms')">
+                                <span class="consult-icon">📱</span>
+                                <div class="consult-title">SMS</div>
+                                <div class="consult-subtitle">Basic phone support</div>
+                            </button>
+                        </div>
+
+                        <div class="emergency-section" onclick="startEmergency()">
+                            <div class="emergency-icon">🚨</div>
+                            <div class="emergency-title">Emergency</div>
+                            <div class="emergency-subtitle">Connect instantly for urgent care</div>
+                        </div>
+
+                        <div class="features-section">
+                            <div class="section-title">Quick Access</div>
+                            <div class="feature-list">
+                                <div class="feature-item" onclick="showFeature('appointments')">
+                                    <div class="feature-icon">📅</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">My Appointments</div>
+                                        <div class="feature-desc">View upcoming consultations</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item" onclick="showFeature('history')">
+                                    <div class="feature-icon">📋</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">Health History</div>
+                                        <div class="feature-desc">Access previous consultations</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item" onclick="showFeature('health-tips')">
+                                    <div class="feature-icon">💡</div>
+                                    <div class="feature-content">
+                                        <div class="feature-title">Health Tips</div>
+                                        <div class="feature-desc">Daily wellness advice</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">👨‍⚕️</div>
+                            <div class="nav-label">Doctors</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">📋</div>
+                            <div class="nav-label">History</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">⚙️</div>
+                            <div class="nav-label">Settings</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consultation Screen -->
+                <div id="consultationScreen" class="consultation-screen">
+                    <div class="consultation-header">
+                        <button class="back-btn" onclick="endConsultation()">←</button>
+                        <div class="consultation-info">
+                            <div class="doctor-name" id="doctorName">Dr. Kwame Mensah</div>
+                            <div class="consultation-type" id="consultationType">Video Consultation</div>
+                        </div>
+                    </div>
+
+                    <div class="consultation-content">
+                        <div class="connecting-animation" id="consultationIcon">📹</div>
+                        <div class="connecting-text" id="consultationStatus">Connecting...</div>
+                        <div class="connecting-subtitle" id="consultationSubtitle">Please wait while we connect you to a healthcare professional</div>
+
+                        <div class="consultation-actions">
+                            <button class="action-btn mute" onclick="toggleMute()">🔇</button>
+                            <button class="action-btn end" onclick="endConsultation()">📞</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-icon" id="modalIcon">📱</div>
+                        <div class="modal-title" id="modalTitle">Feature Coming Soon</div>
+                        <div class="modal-text" id="modalText">This feature is being developed and will be available in the next update.</div>
+                        <div class="modal-buttons">
+                            <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                            <button class="modal-btn primary" onclick="closeModal()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let consultationTimer;
+        let isMuted = false;
+
+        function startConsultation(type) {
+            const consultationTypes = {
+                video: {
+                    icon: '📹',
+                    title: 'Video Consultation',
+                    doctor: 'Dr. Kwame Mensah',
+                    subtitle: 'Preparing video connection...'
+                },
+                voice: {
+                    icon: '📞',
+                    title: 'Voice Consultation',
+                    doctor: 'Dr. Ama Asante',
+                    subtitle: 'Dialing healthcare professional...'
+                },
+                chat: {
+                    icon: '💬',
+                    title: 'Text Consultation',
+                    doctor: 'Dr. Kofi Osei',
+                    subtitle: 'Opening chat interface...'
+                },
+                sms: {
+                    icon: '📱',
+                    title: 'SMS Consultation',
+                    doctor: 'TeleCure Support',
+                    subtitle: 'Sending SMS to healthcare team...'
+                }
+            };
+
+            const consultation = consultationTypes[type];
+            
+            document.getElementById('consultationIcon').textContent = consultation.icon;
+            document.getElementById('consultationType').textContent = consultation.title;
+            document.getElementById('doctorName').textContent = consultation.doctor;
+            document.getElementById('consultationStatus').textContent = 'Connecting...';
+            document.getElementById('consultationSubtitle').textContent = consultation.subtitle;
+
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('consultationScreen').style.display = 'flex';
+
+            // Simulate connection process
+            setTimeout(() => {
+                document.getElementById('consultationStatus').textContent = 'Connected';
+                document.getElementById('consultationSubtitle').textContent = `You are now connected with ${consultation.doctor}`;
+            }, 3000);
+        }
+
+        function startEmergency() {
+            showModal('🚨', 'Emergency Protocol', 'This will connect you directly to emergency services. Do you want to continue?', true);
+        }
+
+        function endConsultation() {
+            document.getElementById('consultationScreen').style.display = 'none';
+            document.getElementById('mainScreen').style.display = 'block';
+            if (consultationTimer) {
+                clearTimeout(consultationTimer);
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            document.querySelector('.action-btn.mute').textContent = isMuted ? '🔇' : '🔊';
+        }
+
+        function showFeature(feature) {
+            const features = {
+                appointments: {
+                    icon: '📅',
+                    title: 'My Appointments',
+                    text: 'You have 1 upcoming appointment scheduled for tomorrow at 2:00 PM with Dr. Mensah.'
+                },
+                history: {
+                    icon: '📋',
+                    title: 'Health History',
+                    text: 'Your last consultation was 3 days ago. All your medical records are stored securely.'
+                },
+                'health-tips': {
+                    icon: '💡',
+                    title: 'Health Tip of the Day',
+                    text: 'Stay hydrated! Drink at least 8 glasses of water daily to maintain good health.'
+                }
+            };
+
+            const featureData = features[feature];
+            showModal(featureData.icon, featureData.title, featureData.text);
+        }
+
+        function showModal(icon, title, text, isEmergency = false) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            
+            if (isEmergency) {
+                document.querySelector('.modal-btn.primary').textContent = 'Connect';
+                document.querySelector('.modal-btn.primary').onclick = () => {
+                    closeModal();
+                    startConsultation('emergency');
+                };
+            } else {
+                document.querySelector('.modal-btn.primary').textContent = 'OK';
+                document.querySelector('.modal-btn.primary').onclick = closeModal;
+            }
+            
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                if (index !== 0) {
+                    showModal('🚧', 'Coming Soon', 'This section is under development and will be available soon.');
+                }
+            });
+        });
+
+        // Add touch feedback
+        document.querySelectorAll('.consult-card, .feature-item, .emergency-section').forEach(element => {
+            element.addEventListener('touchstart', () => {
+                element.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', () => {
+                element.style.transform = '';
+            });
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            document.querySelector('.status-bar span:first-child').textContent = timeString;
+        }, 1000);
+
+        // Welcome message on load
+        setTimeout(() => {
+            showModal('👋', 'Welcome to TeleCure Ghana!', 'Connect with certified healthcare professionals anytime. Your health is our priority.');
+        }, 1500);
+    </script>
+</body>
+</html>
